@@ -1,0 +1,15 @@
+# Use the base image
+FROM python:3.11-slim
+
+RUN pip install --no-cache-dir --upgrade pip
+
+RUN pip install --no-cache-dir --upgrade uvicorn pydantic==2.5.3 flask-sse==1.0.0 httpx_sse==0.4.0 fastapi
+RUN pip install --no-cache-dir --upgrade langchain langchain_nvidia_ai_endpoints jinja2 httpx
+
+WORKDIR /app
+
+COPY client_server.py .
+
+EXPOSE 9000
+
+CMD ["uvicorn", "client_server:app", "--host", "0.0.0.0", "--port", "9000"]

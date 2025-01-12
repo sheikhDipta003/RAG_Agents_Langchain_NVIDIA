@@ -1,0 +1,33 @@
+# Use the base image
+FROM vllm/vllm-openai:v0.4.0.post1
+# FROM nvcr.io/nvidia/pytorch:24.03-py3
+
+RUN python3 -m pip install --upgrade pip
+RUN python3 -m pip install --upgrade tiktoken pandas
+
+# Expose port 8000 for the application
+EXPOSE 8000
+
+## When using custom-installed version, cd to make command point properly
+# WORKDIR /usr/lib/python3/dist-packages
+
+ENTRYPOINT ["python3", "-u", "-m", \
+    "vllm.entrypoints.openai.api_server", \
+    "--host", "0.0.0.0", \
+    # "--model", "databricks/dbrx-instruct", \
+    # "--model", "defog/sqlcoder-70b-alpha", \
+    "--model", "mistralai/Mixtral-8X7B-Instruct-v0.1", \
+    # "--trust-remote-code", \
+    "--enforce-eager", \
+    "--gpu-memory-utilization", "0.95", \
+    "--tensor-parallel-size", "4"]
+
+# docker build -t dbrx-server:latest . -f Dockerfile_cloud_dbrx
+# docker login nvcr.io  ## (if need to kick auto-creds, -username $oauthtoken --password-stdin)
+# docker tag dbrx-server nvcr.io/wxlmwdf4y9ez/dbrx-instruct:24.04.03
+# docker push nvcr.io/wxlmwdf4y9ez/dbrx-instruct:24.04.03
+
+# docker build -t mixtral-server:latest . -f Dockerfile_cloud_mixtral
+# docker login nvcr.io  ## (if need to kick auto-creds, -username $oauthtoken --password-stdin)
+# docker tag mixtral-server nvcr.io/wxlmwdf4y9ez/mixtral-instruct:24.04.10
+# docker push nvcr.io/wxlmwdf4y9ez/mixtral-instruct:24.04.10
