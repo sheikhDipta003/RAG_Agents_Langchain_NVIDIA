@@ -1,7 +1,7 @@
 
 # Building RAG Agents with LLMs | NVIDIA | Coursework
 
-All the resources and my coursework for the course titled **Building RAG Agents with LLMs** by **NVIDIA**. Here are the [slides](task\slides), [my code for the final assessment](task\09_langserve-Copy1.ipynb) and [solutions to the exercises](task\solutions).
+All the resources and my coursework for the course titled **Building RAG Agents with LLMs** by **NVIDIA**. Here are the [slides](./task/slides/), [my code for the final assessment](./task/09_langserve-Copy1.ipynb) and [solutions to the exercises](./task/solutions/).
 
 
 ## Environment Variables
